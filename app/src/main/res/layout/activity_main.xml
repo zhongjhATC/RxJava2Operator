@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="每个按钮生成的结果会在这里呈现"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/tvTips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_blue_dark"
+            android:layout_marginTop="30dp"
+            android:text="讲述这个操作符的作用"
+            tools:ignore="HardcodedText" />
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnDefault"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="默认"
+        tools:ignore="HardcodedText,MissingConstraints"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="18dp" />
+
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="create"
+        tools:ignore="HardcodedText,MissingConstraints"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="18dp" />
+
+    <Button
+        android:id="@+id/btnDefer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="defer"
+        tools:ignore="HardcodedText,MissingConstraints"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="18dp" />
+
+    <Button
+        android:id="@+id/btnJust"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="just"
+        tools:ignore="HardcodedText,MissingConstraints"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="18dp" />
+
+</LinearLayout>
