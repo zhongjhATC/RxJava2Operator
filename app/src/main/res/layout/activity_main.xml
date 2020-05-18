@@ -58,6 +58,15 @@
         tools:layout_editor_absoluteY="18dp" />
 
     <Button
+        android:id="@+id/btnDeferAndbtnJust"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="defer与just区别"
+        tools:ignore="HardcodedText,MissingConstraints"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="18dp" />
+
+    <Button
         android:id="@+id/btnJust"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
