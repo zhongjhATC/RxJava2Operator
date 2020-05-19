@@ -2,6 +2,7 @@ package com.example.rxjava2operator;
 
 import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 
 import com.example.rxjava2operator.net.Api;
 import com.example.rxjava2operator.net.IPApi;
+
+import java.util.concurrent.Callable;
 
 // https://juejin.im/entry/57f4aaceda2f60004f73f041
 // https://www.jianshu.com/p/ed082d5ce0a4
@@ -138,6 +141,22 @@ public class MainActivity extends AppCompatActivity {
         IPApi ipApi = Api.getInstance().retrofit.create(IPApi.class);
         return ipApi.GetIP().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private Observable<Long> defer = getDefer();
+    private Observable<Long> just = getJust();
+
+    public Observable getDefer() {
+        return Observable.defer(new Callable<ObservableSource<Long>>() {
+            @Override
+            public ObservableSource<Long> call() throws Exception {
+                return getJust();
+            }
+        });
+    }
+
+    private Observable getJust() {
+        return Observable.create(System.currentTimeMillis());
     }
 
     /**
