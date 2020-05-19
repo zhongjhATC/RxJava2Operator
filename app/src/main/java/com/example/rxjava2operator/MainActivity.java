@@ -6,6 +6,7 @@ import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 import android.annotation.SuppressLint;
@@ -21,9 +22,10 @@ import java.util.concurrent.Callable;
 // https://www.jianshu.com/p/ed082d5ce0a4
 // https://www.jianshu.com/p/fc2e551b907c
 // https://blog.csdn.net/THEONE10211024/article/details/50435325
-// https://api.ipify.org/
-// https://mcxiaoke.gitbooks.io/rxdocs/content/operators/Defer.html
+// ip: https://api.ipify.org/
+// 大纲：https://mcxiaoke.gitbooks.io/rxdocs/content/operators/Defer.html
 // https://www.jianshu.com/p/f54f32b39b7c
+// 项目中常用的：https://juejin.im/post/5c2d960af265da61285a3cfc
 //RxJava的四个基本概念
 //        　　Observable(被观察者)
 //        　　Observer(观察者)
@@ -56,11 +58,14 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnCreate).setOnClickListener(v -> {
             value = "Create";
             tvContent.setText("");
-            tvTips.setText("使用一个函数从头创建一个Observable,一个形式正确的有限Observable必须尝试调用观察者的onCompleted正好一次或者它的onError正好一次，而且此后不能再调用观察者的任何其它方法。在传递给create方法的函数中检查观察者的isUnsubscribed状态，以便在没有观察者的时候，让你的Observable停止发射数据或者做昂贵的运算。");
+            tvTips.setText("https://www.jianshu.com/p/3b37d98d60ab");
             Observable<String> source = getSource(value);
             value = value + "修改值+1";
-            source
-                    .subscribeOn(Schedulers.io())
+            source.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(getObserver());
+            value = value + "修改值+1";
+            source.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getObserver());
         });
@@ -77,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getObserver());
+            value = value + "修改值+1";
             source
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -143,22 +149,6 @@ public class MainActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    private Observable<Long> defer = getDefer();
-    private Observable<Long> just = getJust();
-
-    public Observable getDefer() {
-        return Observable.defer(new Callable<ObservableSource<Long>>() {
-            @Override
-            public ObservableSource<Long> call() throws Exception {
-                return getJust();
-            }
-        });
-    }
-
-    private Observable getJust() {
-        return Observable.create(System.currentTimeMillis());
-    }
-
     /**
      * 创建被观察者
      *
@@ -167,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
     private Observable<String> getSource(String value) {
         return Observable.create(observableEmitter -> {
             if (!observableEmitter.isDisposed()) {
-                for (int i = 1; i < 3; i++) {
+                for (int i = 1; i < 2; i++) {
                     observableEmitter.onNext("线程名称:" + Thread.currentThread().getName() + "\n" + "onNext:" + i + "\n");
                 }
                 observableEmitter.onNext("线程名称:" + Thread.currentThread().getName() + "\n" + "onNext:" + value + "\n");

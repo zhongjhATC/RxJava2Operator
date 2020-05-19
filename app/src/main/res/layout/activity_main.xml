@@ -22,9 +22,10 @@
             android:id="@+id/tvTips"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_blue_dark"
             android:layout_marginTop="30dp"
+            android:autoLink="all"
             android:text="讲述这个操作符的作用"
+            android:textColor="@android:color/holo_blue_dark"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>
