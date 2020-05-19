@@ -60,10 +60,7 @@ public class MainActivity extends AppCompatActivity {
             tvContent.setText("");
             tvTips.setText("https://www.jianshu.com/p/3b37d98d60ab");
             Observable<String> source = getSource(value);
-            value = value + "修改值+1";
-            source.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(getObserver());
+            // 这个修改值不起变化，从创建Observable起，就已经确定传了此值
             value = value + "修改值+1";
             source.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -77,11 +74,7 @@ public class MainActivity extends AppCompatActivity {
             tvTips.setText("使用一个函数从头创建一个Observable,一个形式正确的有限Observable必须尝试调用观察者的onCompleted正好一次或者它的onError正好一次，而且此后不能再调用观察者的任何其它方法。在传递给create方法的函数中检查观察者的isUnsubscribed状态，以便在没有观察者的时候，让你的Observable停止发射数据或者做昂贵的运算。");
 
             Observable<String> source = Observable.defer(() -> getSource(value));
-            value = value + "修改值+1";
-            source
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(getObserver());
+            // 可以看到修改值有所变化
             value = value + "修改值+1";
             source
                     .subscribeOn(Schedulers.io())
