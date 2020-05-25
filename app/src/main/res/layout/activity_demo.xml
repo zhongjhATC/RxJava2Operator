@@ -30,54 +30,11 @@
 
     </LinearLayout>
 
-
-    <Button
-        android:id="@+id/btnDefault"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="默认"
-        tools:ignore="HardcodedText,MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnCreate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="create"
-        tools:ignore="HardcodedText,MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnDefer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="defer"
-        tools:ignore="HardcodedText,MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnDeferAndbtnJust"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="defer与just区别"
-        tools:ignore="HardcodedText,MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnJust"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="just"
-        tools:ignore="HardcodedText,MissingConstraints" />
-
     <Button
         android:id="@+id/btnInterval"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Interval"
-        tools:ignore="HardcodedText,MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnTo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="跳转别的窗体"
         tools:ignore="HardcodedText,MissingConstraints" />
 
 </LinearLayout>

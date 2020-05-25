@@ -5,18 +5,22 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.rxjava2operator.net.Api;
 import com.example.rxjava2operator.net.IPApi;
 
-import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 // https://juejin.im/entry/57f4aaceda2f60004f73f041
 // https://www.jianshu.com/p/ed082d5ce0a4
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tvTips;
     TextView tvContent;
-    Disposable disposable;
+    CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     String value = "";
 
     @Override
@@ -109,6 +113,11 @@ public class MainActivity extends AppCompatActivity {
             });
         });
 
+        // 循环请求Api
+        findViewById(R.id.btnInterval).setOnClickListener(v -> intervalGetApi());
+
+        // 跳转别的窗体
+        findViewById(R.id.btnTo).setOnClickListener(v -> MainActivity.this.startActivity(new Intent(MainActivity.this, ToActivity.class)));
 
 //        /*
 //         * 通过merge（）合并事件 & 同时发送事件
@@ -134,6 +143,42 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                });
 
+    }
+
+    /**
+     * 循环请求Api
+     */
+    private void intervalGetApi() {
+        Observable.interval(0, 1, TimeUnit.SECONDS)// 0延迟，每隔一秒发送数据
+                .doOnSubscribe(disposable -> mCompositeDisposable.add(disposable))
+                .flatMap((Function<Long, ObservableSource<String>>) aLong -> {
+                    // 上传数据
+                    return Api.getInstance().retrofit.create(IPApi.class).GetIP();
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(Disposable disposable) {
+                        mCompositeDisposable.add(disposable);
+                    }
+
+                    @Override
+                    public void onNext(String o) {
+                        Log.e("test", "test " + o);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("test", "test " + e.getMessage());
+                        intervalGetApi();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private Observable<String> defaultValue() {
