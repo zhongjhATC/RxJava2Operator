@@ -74,6 +74,13 @@
         tools:ignore="HardcodedText,MissingConstraints" />
 
     <Button
+        android:id="@+id/btnSingle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Single"
+        tools:ignore="HardcodedText,MissingConstraints" />
+
+    <Button
         android:id="@+id/btnTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

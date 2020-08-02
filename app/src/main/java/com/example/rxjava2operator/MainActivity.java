@@ -2,8 +2,14 @@ package com.example.rxjava2operator;
 
 import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleObserver;
+import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -115,6 +121,57 @@ public class MainActivity extends AppCompatActivity {
 
         // 循环请求Api
         findViewById(R.id.btnInterval).setOnClickListener(v -> intervalGetApi());
+
+        // single
+
+        findViewById(R.id.btnSingle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Single.create(new SingleOnSubscribe<Object>() {
+//                    @Override
+//                    public void subscribe(SingleEmitter<Object> singleEmitter) throws Exception {
+//
+//                    }
+//                })  .subscribeOn(Schedulers.io())
+//                        .unsubscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(new SingleObserver<Integer>() {
+//                            @Override
+//                            public void onSubscribe(Disposable observableEmitter) {
+//                                if (!observableEmitter.isDisposed()) {
+//                                    observableEmitter.
+//
+//                                    for (int i = 1; i < 2; i++) {
+//                                        observableEmitter.onNext("线程名称:" + Thread.currentThread().getName() + "\n" + "onNext:" + i + "\n");
+//                                    }
+//                                    observableEmitter.onNext("线程名称:" + Thread.currentThread().getName() + "\n" + "onNext:" + value + "\n");
+//                                    observableEmitter.onComplete();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onSuccess(Integer integer) {
+//                                tvTips.setText("rxJavaSingleExample--:" + Thread.currentThread().getName() + "-onSuccess-:" + integer);
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable e) {
+//                                tvTips.setText("rxJavaSingleExample--:" + Thread.currentThread().getName() + "-onError-:" + e.toString());
+//                            }
+//                        });
+//
+////                observableEmitter -> {
+////                    if (!observableEmitter.isDisposed()) {
+////                        for (int i = 1; i < 2; i++) {
+////                            observableEmitter.onNext("线程名称:" + Thread.currentThread().getName() + "\n" + "onNext:" + i + "\n");
+////                        }
+////                        observableEmitter.onNext("线程名称:" + Thread.currentThread().getName() + "\n" + "onNext:" + value + "\n");
+////                        observableEmitter.onComplete();
+////                    }
+////                }
+
+            }
+        });
 
         // 跳转别的窗体
         findViewById(R.id.btnTo).setOnClickListener(v -> MainActivity.this.startActivity(new Intent(MainActivity.this, ToActivity.class)));
