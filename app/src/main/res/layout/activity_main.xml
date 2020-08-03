@@ -80,6 +80,34 @@
         android:text="Single"
         tools:ignore="HardcodedText,MissingConstraints" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="线程调度器" />
+
+    <Button
+        android:id="@+id/btnComputation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Computation - 要调度的线程数取决于系统中存在的CPU。每个CPU允许一个线程。最适合事件循环或回调操作。"
+        tools:ignore="HardcodedText,MissingConstraints" />
+
+    <Button
+        android:id="@+id/btnIo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Io - 在io()内部有线程池，可以使用空闲的线程，多数情况下比newThread()效率高"
+        tools:ignore="HardcodedText,MissingConstraints" />
+
+    <Button
+        android:id="@+id/btnTrampoline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trampoline - 通过阻塞队列方式来先进先出的方式去执行任务"
+        tools:ignore="HardcodedText,MissingConstraints" />
+
     <Button
         android:id="@+id/btnTo"
         android:layout_width="wrap_content"

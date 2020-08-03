@@ -6,6 +6,7 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleObserver;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import com.example.rxjava2operator.net.Api;
 import com.example.rxjava2operator.net.IPApi;
 
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 // https://juejin.im/entry/57f4aaceda2f60004f73f041
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tvContent;
     CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     String value = "";
+    int valueInt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,54 +126,79 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnInterval).setOnClickListener(v -> intervalGetApi());
 
         // single
-
-        findViewById(R.id.btnSingle).setOnClickListener(new View.OnClickListener() {
+        // https://dieyidezui.com/deep-into-rxjava2-scheduler/
+        // https://www.jianshu.com/p/4f4ee35b8473
+        // https://www.jianshu.com/p/b037dbae9d8f
+//        Schedulers.computation()	适用于计算密集型任务
+//        Schedulers.io()	适用于 IO 密集型任务
+//        Schedulers.trampoline()	在某个调用 schedule 的线程执行
+//        Schedulers.newThread()	每个 Worker 对应一个新线程
+//        Schedulers.single()	所有 Worker 使用同一个线程执行任务
+//        Schedulers.from(Executor)	使用 Executor 作为任务执行的线程
+        // https://www.tutorialspoint.com/rxjava/rxjava_computation_scheduler.htm
+        findViewById(R.id.btnComputation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Single.create(new SingleOnSubscribe<Object>() {
-//                    @Override
-//                    public void subscribe(SingleEmitter<Object> singleEmitter) throws Exception {
-//
-//                    }
-//                })  .subscribeOn(Schedulers.io())
-//                        .unsubscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(new SingleObserver<Integer>() {
-//                            @Override
-//                            public void onSubscribe(Disposable observableEmitter) {
-//                                if (!observableEmitter.isDisposed()) {
-//                                    observableEmitter.
-//
-//                                    for (int i = 1; i < 2; i++) {
-//                                        observableEmitter.onNext("线程名称:" + Thread.currentThread().getName() + "\n" + "onNext:" + i + "\n");
-//                                    }
-//                                    observableEmitter.onNext("线程名称:" + Thread.currentThread().getName() + "\n" + "onNext:" + value + "\n");
-//                                    observableEmitter.onComplete();
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onSuccess(Integer integer) {
-//                                tvTips.setText("rxJavaSingleExample--:" + Thread.currentThread().getName() + "-onSuccess-:" + integer);
-//                            }
-//
-//                            @Override
-//                            public void onError(Throwable e) {
-//                                tvTips.setText("rxJavaSingleExample--:" + Thread.currentThread().getName() + "-onError-:" + e.toString());
-//                            }
-//                        });
-//
-////                observableEmitter -> {
-////                    if (!observableEmitter.isDisposed()) {
-////                        for (int i = 1; i < 2; i++) {
-////                            observableEmitter.onNext("线程名称:" + Thread.currentThread().getName() + "\n" + "onNext:" + i + "\n");
-////                        }
-////                        observableEmitter.onNext("线程名称:" + Thread.currentThread().getName() + "\n" + "onNext:" + value + "\n");
-////                        observableEmitter.onComplete();
-////                    }
-////                }
 
             }
+        });
+
+        findViewById(R.id.btnSingle).setOnClickListener(v -> {
+            Single.create((SingleOnSubscribe<String>) singleEmitter -> {
+                valueInt++;
+                Thread.sleep(2000);
+                singleEmitter.onSuccess("等待两秒执行第一个");
+            }).subscribeOn(Schedulers.trampoline())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new SingleObserver<String>() {
+                        @Override
+                        public void onSubscribe(Disposable disposable) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(String o) {
+                            MainActivity.this.tvTips.setText(o);
+                            Log.i("Single", o);
+                        }
+
+                        @Override
+                        public void onError(Throwable throwable) {
+
+                        }
+                    });
+
+            Single.create((SingleOnSubscribe<String>) singleEmitter -> singleEmitter.onSuccess("第二个"))
+                    .subscribeOn(Schedulers.trampoline())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new SingleObserver<String>() {
+                        @Override
+                        public void onSubscribe(Disposable disposable) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(String o) {
+                            MainActivity.this.tvTips.setText(o);
+                            Log.i("Single", o);
+                        }
+
+                        @Override
+                        public void onError(Throwable throwable) {
+
+                        }
+                    });
+
+//                observableEmitter -> {
+//                    if (!observableEmitter.isDisposed()) {
+//                        for (int i = 1; i < 2; i++) {
+//                            observableEmitter.onNext("线程名称:" + Thread.currentThread().getName() + "\n" + "onNext:" + i + "\n");
+//                        }
+//                        observableEmitter.onNext("线程名称:" + Thread.currentThread().getName() + "\n" + "onNext:" + value + "\n");
+//                        observableEmitter.onComplete();
+//                    }
+//                }
+
         });
 
         // 跳转别的窗体
