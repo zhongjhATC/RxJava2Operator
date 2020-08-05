@@ -30,89 +30,122 @@
 
     </LinearLayout>
 
-
-    <Button
-        android:id="@+id/btnDefault"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="默认"
-        tools:ignore="HardcodedText,MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnCreate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="create"
-        tools:ignore="HardcodedText,MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnDefer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="defer"
-        tools:ignore="HardcodedText,MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnDeferAndbtnJust"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="defer与just区别"
-        tools:ignore="HardcodedText,MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnJust"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="just"
-        tools:ignore="HardcodedText,MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnInterval"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Interval"
-        tools:ignore="HardcodedText,MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnSingle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Single"
-        tools:ignore="HardcodedText,MissingConstraints" />
-
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="20dp"
-        android:text="线程调度器" />
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/btnComputation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Computation - 要调度的线程数取决于系统中存在的CPU。每个CPU允许一个线程。最适合事件循环或回调操作。"
-        tools:ignore="HardcodedText,MissingConstraints" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnIo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Io - 在io()内部有线程池，可以使用空闲的线程，多数情况下比newThread()效率高"
-        tools:ignore="HardcodedText,MissingConstraints" />
+            <Button
+                android:id="@+id/btnClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="清空"
+                tools:ignore="HardcodedText,MissingConstraints" />
 
-    <Button
-        android:id="@+id/btnTrampoline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Trampoline - 通过阻塞队列方式来先进先出的方式去执行任务"
-        tools:ignore="HardcodedText,MissingConstraints" />
+            <Button
+                android:id="@+id/btnDefault"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="默认"
+                tools:ignore="HardcodedText,MissingConstraints" />
 
-    <Button
-        android:id="@+id/btnTo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="跳转别的窗体"
-        tools:ignore="HardcodedText,MissingConstraints" />
+            <Button
+                android:id="@+id/btnCreate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="create"
+                tools:ignore="HardcodedText,MissingConstraints" />
+
+            <Button
+                android:id="@+id/btnDefer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="defer"
+                tools:ignore="HardcodedText,MissingConstraints" />
+
+            <Button
+                android:id="@+id/btnDeferAndbtnJust"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="defer与just区别"
+                tools:ignore="HardcodedText,MissingConstraints" />
+
+            <Button
+                android:id="@+id/btnJust"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="just"
+                tools:ignore="HardcodedText,MissingConstraints" />
+
+            <Button
+                android:id="@+id/btnInterval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Interval"
+                tools:ignore="HardcodedText,MissingConstraints" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="20dp"
+                android:text="线程调度器" />
+
+            <Button
+                android:id="@+id/btnComputation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Computation - 要调度的线程数取决于系统中存在的CPU。每个CPU允许一个线程。最适合事件循环或回调操作。"
+                tools:ignore="HardcodedText,MissingConstraints" />
+
+            <Button
+                android:id="@+id/btnIo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Io - 在io()内部有线程池，可以使用空闲的线程，多数情况下比newThread()效率高"
+                tools:ignore="HardcodedText,MissingConstraints" />
+
+            <Button
+                android:id="@+id/btnTrampoline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trampoline - 通过阻塞队列方式来先进先出的方式去执行任务"
+                tools:ignore="HardcodedText,MissingConstraints" />
+
+            <Button
+                android:id="@+id/btnNewThread"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NewThread - 每个 Worker 对应一个新线程"
+                tools:ignore="HardcodedText,MissingConstraints" />
+
+            <Button
+                android:id="@+id/btnSingle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Single - 所有 Worker 使用同一个线程执行任务"
+                tools:ignore="HardcodedText,MissingConstraints" />
+
+            <Button
+                android:id="@+id/btnFromExecutor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="From(Executor) - 使用 Executor 作为任务执行的线程"
+                tools:ignore="HardcodedText,MissingConstraints" />
+
+            <Button
+                android:id="@+id/btnTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="跳转别的窗体"
+                tools:ignore="HardcodedText,MissingConstraints" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
