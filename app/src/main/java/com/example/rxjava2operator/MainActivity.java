@@ -146,23 +146,42 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.btnTrampoline).setOnClickListener(v -> {
             tvContent.setText("");
+
+            Observable<String> sourceIo = getSource("这个io线程不进行排队，不影响当前3个排队");
+            sourceIo.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(getObserver());
+
             Observable<String> source = Observable.create(observableEmitter -> {
                 if (!observableEmitter.isDisposed()) {
-                    Thread.sleep(3000);
-                    observableEmitter.onNext("Trampoline - 3秒后执行第一个\n");
+                    observableEmitter.onNext("Trampoline - 立即执行第一个\n");
                     observableEmitter.onComplete();
                 }
             });
             source.subscribeOn(Schedulers.trampoline())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getObserver());
+
             Observable<String> source2 = Observable.create(observableEmitter -> {
+                Thread.sleep(3000);
                 if (!observableEmitter.isDisposed()) {
-                    observableEmitter.onNext("Trampoline - 立即执行第二个\n");
+                    observableEmitter.onNext("Trampoline - 3秒后执行执行第二个\n");
                     observableEmitter.onComplete();
                 }
             });
             source2.subscribeOn(Schedulers.trampoline())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(getObserver());
+
+
+
+            Observable<String> source3 = Observable.create(observableEmitter -> {
+                if (!observableEmitter.isDisposed()) {
+                    observableEmitter.onNext("Trampoline - 立即执行第三个\n");
+                    observableEmitter.onComplete();
+                }
+            });
+            source3.subscribeOn(Schedulers.trampoline())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(getObserver());
         });
